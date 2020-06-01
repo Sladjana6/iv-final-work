@@ -17,20 +17,20 @@ public class LoginPageTest extends BaseTest {
 
     @Test
     public void positiveLoginTest() {
-        loginPage.performLogIn("sladjanafilipovic6@gmail.com", "sladjana6");
+        loginPage.performLogin("sladjanafilipovic6@gmail.com", "sladjana6");
         softAssertions.assertThat(loginPage.getUser())
                 .withFailMessage("User is not correct!")
                 .isEqualTo("SLADJANA FILIPOVIC");
-        softAssertions.assertThat(loginPage.isLogoutVisible())
+        softAssertions.assertThat(loginPage.isLogoutDisplayed())
                 .withFailMessage("Logout button is not displayed!")
                 .isTrue();
     }
 
     @Test
     public void negativeLoginTest() {
-        loginPage.performLogIn("sladjanafilipovic6@gmail.com", "sladjana");
+        loginPage.performLogin("sladjanafilipovic6@gmail.com", "sladjana");
         softAssertions.assertThat(loginPage.getFailMessage())
-                .withFailMessage("Something is wrong with fail login!")
+                .withFailMessage("Something is wrong with login!")
                 .isEqualTo("Pogrešna email adresa ili lozinka. Molimo Vas pokušajte ponovo!");
     }
 }

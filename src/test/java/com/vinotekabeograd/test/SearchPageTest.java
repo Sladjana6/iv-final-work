@@ -5,7 +5,6 @@ import com.vinotekabeograd.page.SearchPage;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 
 public class SearchPageTest extends BaseTest {
 
@@ -13,7 +12,8 @@ public class SearchPageTest extends BaseTest {
 
     @Before
     public void setUp() {
-        searchPage = new SearchPage(driver);
+        driver.get("https://www.vinotekabeograd.com/");
+        searchPage   = new SearchPage(driver);
     }
 
     @Test
@@ -24,6 +24,7 @@ public class SearchPageTest extends BaseTest {
             actions
                     .moveToElement(result)
                     .build().perform();
+            //assert that result contains query param
             softAssertions.assertThat(result.getText())
                     .withFailMessage("Search element has no query parameter!")
                     .contains(query.toUpperCase());

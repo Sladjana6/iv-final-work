@@ -2,6 +2,7 @@ package com.vinotekabeograd.test;
 
 import com.vinotekabeograd.BaseTest;
 import com.vinotekabeograd.page.FilterPage;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
@@ -14,28 +15,34 @@ public class FilterPageTest extends BaseTest {
 
     @Before
     public void setUp() {
+        driver.get("https://www.vinotekabeograd.com/");
         filterPage = new FilterPage(driver);
     }
 
     @Test
     public void performFilteringTest() {
         filterPage.searchWithFilters();
-        List<WebElement> results = filterPage.getResults();
-        results.forEach(r -> {
-            actions.moveToElement(r).build().perform();
-            //assert slike za akciju
-            softAssertions.assertThat(filterPage.isProductActionImageDisplayed(r))
+        List<WebElement> filterResults = filterPage.getFilterResults();
+        //check if result list is empty and stop test
+        Assert.assertFalse("Filter result is empty!", filterResults.isEmpty());
+        for (WebElement result : filterResults) {
+            actions
+                    .moveToElement(result)
+                    .build().perform();
+            //assert for action image 2+1
+            softAssertions.assertThat(filterPage.isProductActionImageDisplayed(result))
                     .withFailMessage("Product action image is not displayed!")
                     .isTrue();
-            //assert za Srbiju
-            softAssertions.assertThat(filterPage.getProductCountry(r))
-                    .withFailMessage("Product country is not okay")
+            //assert for country Serbia
+            softAssertions.assertThat(filterPage.getProductCountry(result))
+                    .withFailMessage("Product country is not ok!")
                     .isEqualTo("Srbija");
-            //assert za Chardonnay i 2+1 naziv
-            softAssertions.assertThat(filterPage.getProductTitle(r))
-                    .withFailMessage("Product title is not okay")
+            //assert for Chardonnay and 2+1
+            softAssertions.assertThat(filterPage.getProductTitle(result))
+                    .withFailMessage("Product title is not ok!")
                     .contains("AKCIJA 2+1")
                     .contains("CHARDONNAY");
-        });
+        }
+        ;
     }
 }

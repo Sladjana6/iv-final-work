@@ -15,7 +15,6 @@ public class SearchPage {
 
     public SearchPage(WebDriver driver) {
         wdWait = new WebDriverWait(driver, 10);
-        driver.get("https://www.vinotekabeograd.com/");
         PageFactory.initElements(driver, this);
         closeNewsletter.click();
     }
@@ -29,6 +28,11 @@ public class SearchPage {
     @FindBy(css = ".product-item .title a")
     private List<WebElement> searchResults;
 
+    /**
+     * Performs search based on query parameter
+     *
+     * @param query
+     */
     public void performSearch(String query) {
         wdWait.until(ExpectedConditions.visibilityOf(searchBoxIcon));
         searchBoxIcon.click();
@@ -36,11 +40,23 @@ public class SearchPage {
         searchBoxInput.submit();
     }
 
+    /**
+     * Returns list of results
+     *
+     * @return results
+     */
     public List<WebElement> getSearchResults() {
         return searchResults;
     }
 
+    /**
+     * Returns first result
+     *
+     * @return first result
+     */
     public WebElement getFirstResult() {
         return searchResults.get(0);
     }
+
+
 }

@@ -35,7 +35,14 @@ public class LoginPage {
     @FindBy(css = ".login_form .alert-danger")
     private WebElement badLoginMessage;
 
-    public void performLogIn(String userEmail, String userPassword) {
+
+    /**
+     * Opens login form, populates it with data and submits it
+     *
+     * @param userEmail
+     * @param userPassword
+     */
+    public void performLogin(String userEmail, String userPassword) {
         loginLabel.click();
         wdWait.until(ExpectedConditions.visibilityOf(emailInput));
         emailInput.clear();
@@ -45,15 +52,30 @@ public class LoginPage {
         loginButton.click();
     }
 
+    /**
+     * Returns user's first name and last name from header
+     *
+     * @return user's first name, last name
+     */
     public String getUser() {
         wdWait.until(ExpectedConditions.visibilityOf(usernameSpan));
         return usernameSpan.getText();
     }
 
-    public Boolean isLogoutVisible() {
+    /**
+     * Checks if logout button is displayed
+     *
+     * @return is logout button displayed
+     */
+    public Boolean isLogoutDisplayed() {
         return logoutButton.isDisplayed();
     }
 
+    /**
+     * Returns fail message for invalid login
+     *
+     * @return fail message
+     */
     public String getFailMessage() {
         wdWait.until(ExpectedConditions.visibilityOf(badLoginMessage));
         return badLoginMessage.getText();
