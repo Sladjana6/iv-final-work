@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BaseTest {
 
@@ -17,7 +16,7 @@ public class BaseTest {
 
     @Before
     public void init() {
-        //WebDriverManager.chromedriver().setup();
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         actions = new Actions(driver);

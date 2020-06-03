@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
 import java.util.Random;
 
 public class CheckoutPageTest extends BaseTest {
@@ -29,9 +30,10 @@ public class CheckoutPageTest extends BaseTest {
     public void orderTest() {
         final String query = "kajsija";
         searchPage.performSearch(query);
+        List<WebElement> searchResults = searchPage.getSearchResults();
 
         Random random = new Random();
-        WebElement result = searchPage.getSearchResults().get(random.nextInt(searchPage.getSearchResults().size()));
+        WebElement result = searchResults.get(random.nextInt(searchPage.getSearchResults().size()));
         actions
                 .moveToElement(result)
                 .build().perform();
@@ -63,11 +65,10 @@ public class CheckoutPageTest extends BaseTest {
         softAssertions.assertThat(quantityOnCheckoutPage)
                 .withFailMessage("Quantity is not ok!")
                 .isEqualTo(quantityOnProductPage);
-        //assert for total proce
+        //assert for total price
         softAssertions.assertThat(actualPrice)
                 .withFailMessage("Total price is not ok!")
                 .isEqualTo(expectedPrice);
-
     }
 
     /**
@@ -84,6 +85,4 @@ public class CheckoutPageTest extends BaseTest {
         float f = Float.parseFloat(sub);
         return String.format("%.2f", f * multiplier);
     }
-
-
 }
